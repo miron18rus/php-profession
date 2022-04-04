@@ -1,11 +1,10 @@
 <?php
 
-/* class Human
+class Human
 {
     public $name;
     public $age;
     public $city;
-
 
     public function __construct($name, $age, $city)
     {
@@ -47,7 +46,7 @@ $igor = new Doctor('Игорь', 33, 'Москва', 'Стоматологом')
 $irina = new Doctor('Ирина', 23, 'Калининград', 'Хирургом');
 $igor->info();
 $irina->info();
-$igor->treat($zina); */
+$igor->treat($zina);
 
 
 
