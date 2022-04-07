@@ -15,18 +15,20 @@ abstract class Model
         $this->db = $db;
     }
 
+
+
     abstract public function getTableName();
 
     public function getOne($id)
     {
-        $tableName = $this->getTableName();
+        $this->tableName = $this->getTableName();
         $sql = "SELECT * FROM {$this->tableName}.'<br>' WHERE id = {$id}";
         return  $this->db->queryOne($sql);
     }
 
     public function getAll()
     {
-        $tableName = $this->getTableName();
+        $this->tableName = $this->getTableName();
         $sql = "SELECT * FROM {$this->tableName}.'<br>'";
         return  $this->db->queryAll($sql);
     }
