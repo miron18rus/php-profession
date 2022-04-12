@@ -2,34 +2,35 @@
 
 namespace app\models;
 
+use app\interfaces\IModel;
+
 use app\engine\Db;
 
 abstract class Model
 {
-    protected $db;
-
-    protected $tableName = '';
-
-    public function __construct(Db $db)
+    public function __set($name, $value)
     {
-        $this->db = $db;
+        $this->$name = $value;
     }
 
-
+    public function __get($name, $value)
+    {
+        return $this->$name;
+    }
 
     abstract public function getTableName();
 
     public function getOne($id)
     {
-        $this->tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$this->tableName}.'<br>' WHERE id = {$id}";
-        return  $this->db->queryOne($sql);
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+        return  $this->db->queryOne($sql, ['id' => $id]);
     }
 
     public function getAll()
     {
-        $this->tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$this->tableName}.'<br>'";
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName}";
         return  $this->db->queryAll($sql);
     }
 }
