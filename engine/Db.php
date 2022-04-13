@@ -13,6 +13,15 @@ class Db
         'charset' => 'utf8'
     ];
 
+   /*  private static $instance = null;
+
+    private static function getInstance($instance) {
+        if(is_null($instance) {
+            static::$instance = new static();
+        })
+        return $instance;
+    } */
+
     private $connection = null;
 
     private function getConnection()
