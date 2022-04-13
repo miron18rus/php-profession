@@ -9,7 +9,7 @@ class Autoload
         $filename = "../{$className}.php";
         $filename = str_replace(['app', "\\"], '/', $filename);
         $filename = str_replace("///", '/', $filename);
-        var_dump($filename);
+        /* var_dump($filename); */
         if (file_exists($filename)) {
 
             include $filename;

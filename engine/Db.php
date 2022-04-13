@@ -2,25 +2,21 @@
 
 namespace app\engine;
 
+use app\traits\TSingletone;
+
 class Db
 {
+
+    use TSingletone;
+
     private $config = [
         'driver' => 'mysql',
-        'host' => 'localhost:3306',
+        'host' => 'localhost',
         'login' => 'root',
         'password' => '',
-        'database' => '',
+        'database' => 'php-prof',
         'charset' => 'utf8'
     ];
-
-   /*  private static $instance = null;
-
-    private static function getInstance($instance) {
-        if(is_null($instance) {
-            static::$instance = new static();
-        })
-        return $instance;
-    } */
 
     private $connection = null;
 
@@ -48,6 +44,18 @@ class Db
         );
     }
 
+    public function getlastInsertId()
+    {
+        return $this->getConnection()->lastInsertId();
+    }
+
+    public function queryInsert($sql, $params)
+    {
+        $STH = $this->getConnection()->prepare($sql);
+        $STH->execute($params);
+        return $STH;
+    }
+
     private function query($sql, $params)
     {
         $STH = $this->getConnection()->prepare($sql);
@@ -57,17 +65,16 @@ class Db
 
     public function queryOne($sql, $params = [])
     {
-        return $this->query($sql, $params)->fetch(); 
-        
+        return $this->query($sql, $params)->fetch();
     }
 
     public function queryAll($sql, $params = [])
     {
-        return $this->query($sql, $params)->fetchAll(); 
+        return $this->query($sql, $params)->fetchAll();
     }
 
     public function execute($sql, $params = [])
     {
-        return $this->query($sql, $params)->rowCount();
+        return $this->execute($sql, $params)->rowCount();
     }
 }
