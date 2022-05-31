@@ -7,8 +7,20 @@ include '../engine/Autoload.php';
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$product = new Products('Пицца', 'Пепперони', 300);
-$user = new Users('User', '123qwe');
-var_dump($product->insert());
-var_dump($product->delete());
+$controllerName = $_GET['c'] ?? 'product'; //тернарник if
+$actionName = $_GET['a'];
+
+$controllerClass = 'app\\controllers\\' . ucfirst($controllerName) . 'Controller';
+
+
+if (class_exists($controllerClass)) {
+    $controller = new $controllerClass;
+    $controller->runAction($actionName);
+    var_dump(get_class_methods($controller));
+} else {
+    Die('404');
+}
+
+var_dump($controllerClass);
+
 

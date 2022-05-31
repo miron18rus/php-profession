@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-class Users extends Model
+class Users extends DBModel
 {
 
     public $id;
@@ -15,7 +15,7 @@ class Users extends Model
         $this->password = $password;
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'users';
     }
