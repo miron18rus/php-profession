@@ -7,12 +7,19 @@ class ProductController
 {
 
     private $action;
-    private $defaultAction = 'catalog';
+    private $defaultAction = 'index';
 
     public function runAction($action) {
         $this->action = $action ?? $this->defaultAction;
         $method = 'action' . ucfirst($this->action);
-        var_dump($method);
+        if (method_exists($this, $method)) {
+            $this->$method();
+        }
+        
+    }
+
+    public function actionIndex() {
+        echo 'Главная';
     }
 
     public function actionCatalog() {

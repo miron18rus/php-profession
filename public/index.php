@@ -16,11 +16,8 @@ $controllerClass = 'app\\controllers\\' . ucfirst($controllerName) . 'Controller
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass;
     $controller->runAction($actionName);
-    var_dump(get_class_methods($controller));
 } else {
     Die('404');
 }
-
-var_dump($controllerClass);
 
 
