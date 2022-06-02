@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-class Basket extends Model
+class Basket extends DBModel
 {
     public $id;
     public $name;
@@ -16,7 +16,7 @@ class Basket extends Model
         $this->finalPrice = $finalPrice;
     }
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'basket';
     }

@@ -1,36 +1,32 @@
 <?php
 
+
 namespace app\controllers;
+use app\models\Products;
 
-
-class ProductController
+class ProductController extends MainController
 {
 
-    private $action;
-    private $defaultAction = 'index';
-
-    public function runAction($action) {
-        $this->action = $action ?? $this->defaultAction;
-        $method = 'action' . ucfirst($this->action);
-        if (method_exists($this, $method)) {
-            $this->$method();
-        }
-        
+    public function actionIndex() 
+    {
+        echo $this->render('index');
     }
 
-    public function actionIndex() {
-        echo 'Главная';
+    public function actionCatalog()
+    {
+        $catalog = Products::getAll();
+        echo $this->render('catalog', [
+            'catalog' => $catalog
+        ]);
     }
 
-    public function actionCatalog() {
-        echo 'catalog';
-    }
-
-    public function actionCard() {
-        echo 'card';
-    }
-
-    public function actionAdd() {
-        echo 'add';
+    public function actionCard() 
+    {
+        $id = $_GET['id'];
+        var_dump($id);
+        $product = Products::getOne($id);
+        echo $this->render('card', [
+            'product' => $product
+        ]);
     }
 }

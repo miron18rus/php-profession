@@ -68,6 +68,14 @@ class Db
         return $this->query($sql, $params)->fetch();
     }
 
+    public function queryOneObject($sql, $params, $class) 
+    {
+        $STH = $this->query($sql, $params);
+        $STH->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+
+        return $STH->fetch();
+    }
+
     public function queryAll($sql, $params = [])
     {
         return $this->query($sql, $params)->fetchAll();
