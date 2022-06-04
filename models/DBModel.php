@@ -11,15 +11,19 @@ abstract class DBModel extends Model
     public function insert()
     {
         $params = [];
+        $columns = [];
+
         $tableName = static::getTableName();
-        foreach ($this as $key => $value) {
-            if ($key != 'id') {
-                $params += [$key => $value];
-            }
+
+        foreach ($this->props as $key => $value) {
+                $params += [$key => $this->$key];
+                $columns[] = $key;
         }
-        $request = implode(',', array_keys($params));
-        $request2 = implode(',:', array_keys($params));
-        $sql = "INSERT INTO {$tableName} ({$request}) VALUES (:{$request2})";
+
+        $columns = implode(',', $columns);
+        $value = implode(',:', array_keys($params));
+        $sql = "INSERT INTO {$tableName} ({$columns}) VALUES (:{$value})";
+
         Db::getInstance()->queryInsert($sql, $params);
         $this->id = Db::getInstance()->getlastInsertId();
 
@@ -32,6 +36,36 @@ abstract class DBModel extends Model
         var_dump($tableName);
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         return Db::getInstance()->queryInsert($sql, ['id' => $this->id]);
+    }
+
+    public function update() 
+    {
+        $params = [];
+        $columns = [];
+        $tableName = static::getTableName();
+
+        foreach ($this->props as $key => $value) {
+                if(!$value) continue;
+                $params += [$key => $this->$key];
+                $columns[] .= "`{$key}` = :{$key}";
+                $this->props[$key] = false;
+        }
+        $columns = implode(",", $columns);
+        $params['id'] = $this->id;
+
+        $sql = "UPDATE {$tableName} SET {$columns} WHERE `id` = :id";
+        var_dump($sql);
+        Db::getInstance()->queryInsert($sql, $params);
+        return $this;
+    }
+
+    public function save() 
+    {
+        if (is_null($this->id)) {
+            return $this->insert();
+        } else {
+            return $this->update();
+        }
     }
 
     public static function getOne($id)

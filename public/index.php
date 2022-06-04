@@ -9,6 +9,11 @@ include '../config/config.php';
 spl_autoload_register([new Autoload(), 'loadClass']);
 
 
+$product = Products::getOne(2);
+$product->price = 350;
+$product->update();
+
+var_dump($product);
 
 $controllerName = $_GET['c'] ?? 'product'; //тернарник if
 $actionName = $_GET['a'];
