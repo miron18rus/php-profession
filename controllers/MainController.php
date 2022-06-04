@@ -2,13 +2,23 @@
 
 namespace app\controllers;
 
-class MainController 
+use app\interfaces\IRenderer;
+
+class MainController
 {
 
     private $action;
     private $defaultAction = 'index';
     private $layout = 'main';
     private $useLayout = true;
+
+    protected $render;
+
+    public function __construct(IRenderer $render)
+    {
+        $this->render = $render;
+        
+    }
 
     public function runAction($action) 
     {
@@ -27,16 +37,12 @@ class MainController
                 'content' => $this->renderTemplate($template, $params)
             ]);
         } else {
-            return $this->renderTemplate($template, $params);
+            return $this->render->renderTemplate($template, $params);
         }
     }
 
     public function renderTemplate($template, $params = []) 
     {
-        ob_start();
-        extract($params); 
-        $templatePath = VIEWS_DIR . $template . '.php';
-        include $templatePath;
-        return ob_get_clean();
+        return $this->render->renderTemplate($template, $params);
     }
 }
