@@ -62,7 +62,7 @@ abstract class DBModel extends Model
     {
 
         if (is_null($this->id)) {
-            return $this->update();
+            return $this->insert();
         } else {
             return $this->update();
         }
