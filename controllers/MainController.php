@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\interfaces\IRenderer;
+use app\models\Users;
 
 class MainController
 {
@@ -33,8 +34,11 @@ class MainController
     {
         if ($this->useLayout) {
             return $this->renderTemplate('layouts/' . $this->layout, [
-                'menu' => $this->renderTemplate('menu', $params),
-                'content' => $this->renderTemplate($template, $params)
+                'menu' => $this->renderTemplate('menu', [
+                    'isAuth' => Users::isAuth(),
+                    'username' => Users::getName()
+                ]),
+                'content' => $this->renderTemplate($template, $params),
             ]);
         } else {
             return $this->render->renderTemplate($template, $params);

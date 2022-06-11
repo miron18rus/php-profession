@@ -1,3 +1,14 @@
-<a href="">Главная</a>
-<a href="?c=product&a=catalog">Каталог</a>
-<a href="?c=basket">Корзина</a><br>
+<?php if ($isAuth): ?>
+    Добро пожаловать <?=$username?> <a href="/auth/logout">[Выход]</a>
+<?php else: ?>
+
+    <form action="/auth/login" method="post">
+        <input type="text" name="login" placeholder="Логин">
+        <input type="text" name="pass" placeholder="Пароль">
+        <input type="submit" name="submit" value="Войти">
+    </form>
+<?php endif; ?>
+
+<a href="/">Главная</a>
+<a href="/product/catalog">Каталог</a>
+<a href="/basket/">Корзина</a><br>

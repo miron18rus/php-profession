@@ -23,7 +23,6 @@ class ProductController extends MainController
     public function actionCard() 
     {
         $id = $_GET['id'];
-        var_dump($id);
         $product = Products::getOne($id);
         echo $this->render('card', [
             'product' => $product

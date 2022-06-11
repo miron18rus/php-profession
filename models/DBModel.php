@@ -10,6 +10,7 @@ abstract class DBModel extends Model
 
     public function insert()
     {
+
         $params = [];
         $columns = [];
 
@@ -33,7 +34,6 @@ abstract class DBModel extends Model
     public function delete()
     {
         $tableName = static::getTableName();
-        var_dump($tableName);
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
         return Db::getInstance()->queryInsert($sql, ['id' => $this->id]);
     }
@@ -54,18 +54,25 @@ abstract class DBModel extends Model
         $params['id'] = $this->id;
 
         $sql = "UPDATE {$tableName} SET {$columns} WHERE `id` = :id";
-        var_dump($sql);
         Db::getInstance()->queryInsert($sql, $params);
         return $this;
     }
 
     public function save() 
     {
+
         if (is_null($this->id)) {
-            return $this->insert();
+            return $this->update();
         } else {
             return $this->update();
         }
+    }
+
+    public static function getOneWhere($name, $value)
+    {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE `{$name}` = :value";
+        return  Db::getInstance()->queryOneObject($sql, ['value' => $value], static::class);
     }
 
     public static function getOne($id)

@@ -1,22 +1,24 @@
 <?php
 
+session_start();
+
 use app\engine\Render;
+use app\engine\TwigRender;
 use app\models\{Products, Users, Basket}; 
 
 include '../engine/Autoload.php';
 include '../config/config.php';
 
 spl_autoload_register([new Autoload(), 'loadClass']);
+require_once '../vendor/autoload.php';
 
 
-$product = Products::getOne(2);
-$product->price = 350;
-$product->update();
+$url = explode('/',$_SERVER['REQUEST_URI']);
 
-var_dump($product);
 
-$controllerName = $_GET['c'] ?? 'product'; //тернарник if
-$actionName = $_GET['a'];
+
+$controllerName = $url[1] ?: 'product'; //тернарник if
+$actionName = $url[2];
 
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . 'Controller';
