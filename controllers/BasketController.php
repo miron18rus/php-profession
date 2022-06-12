@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 use app\models\Basket;
+use app\engine\Request;
 
 class BasketController extends MainController {
 
@@ -16,13 +17,21 @@ class BasketController extends MainController {
 
     public function actionAdd()
     {
-        $id = $_POST['id'];
+        //$id = $_POST['id'];
+        $id = (new Request())->getParams()['id'];
         $session_id = session_id();
-        var_dump($id);
-        var_dump($session_id);
+
+        
         (new Basket($session_id, $id))->save();
 
-        header('Location: /product/catalog');
+        $response = [
+            'success' => 'OK',
+            'count' => Basket::getCountWhere('session_id', $session_id)
+        ];
+
+
+        echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         die();
+
     }
 } 

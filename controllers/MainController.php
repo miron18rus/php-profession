@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\interfaces\IRenderer;
 use app\models\Users;
+use app\models\Basket;
 
 class MainController
 {
@@ -36,7 +37,8 @@ class MainController
             return $this->renderTemplate('layouts/' . $this->layout, [
                 'menu' => $this->renderTemplate('menu', [
                     'isAuth' => Users::isAuth(),
-                    'username' => Users::getName()
+                    'username' => Users::getName(),
+                    'count' => Basket::getCountWhere('session_id', session_id()),
                 ]),
                 'content' => $this->renderTemplate($template, $params),
             ]);

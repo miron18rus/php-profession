@@ -2,13 +2,29 @@
 
 <?php foreach ($catalog as $item):?>
         <div>
-            <form action="/basket/add/" method="post">
+            
                 <input type="text" name="id" value="<?=$item['id']?>" hidden>
                 <h3><a href="/product/card/?id=<?=$item['id']?>"><?=$item['name']?></a></h3>
                 <p>price: <?=$item['price']?></p>
-                <button type="submit">Купить</button>
-            </form>
+                <button data-id="<?=$item['id']?>" class="buy">Купить</button>
+
         </div>
 <?endforeach;?>
 
 <a href="/product/catalog/?page=<?=$page?>">Еще</a>
+
+<script>
+    let buttons = document.querySelectorAll('.buy');
+    buttons.forEach((e) => {
+        e.addEventListener('click', () => {
+            let id = e.getAttribute('data-id');
+            (
+                async () => {
+                    const response = await fetch('/basket/add/?id=' + id)
+                    const answer = await response.json();
+                    document.getElementById('count').innerText = answer.count;
+                }
+            )()
+        })
+    })
+</script>
