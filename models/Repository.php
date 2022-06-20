@@ -3,20 +3,21 @@
 namespace app\models;
 use app\engine\Db;
 
-abstract class DBModel extends Model
+abstract class Repository
 {
 
-    abstract protected static function getTableName();
+    abstract protected function getTableName();
+    abstract protected function getEntityClass();
 
-    public function insert()
+    public function insert(Entity $entity)
     {
 
         $params = [];
         $columns = [];
 
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
 
-        foreach ($this->props as $key => $value) {
+        foreach ($entity->props as $key => $value) {
                 $params += [$key => $this->$key];
                 $columns[] = $key;
         }
@@ -31,67 +32,67 @@ abstract class DBModel extends Model
         return $this;
     }
 
-    public function delete()
+    public function delete(Entity $entity)
     {
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
         $sql = "DELETE FROM {$tableName} WHERE id = :id";
-        return Db::getInstance()->queryInsert($sql, ['id' => $this->id]);
+        return Db::getInstance()->queryInsert($sql, ['id' => $entity->id]);
     }
 
-    public function update() 
+    public function update(Entity $entity) 
     {
         $params = [];
         $columns = [];
-        $tableName = static::getTableName();
 
-        foreach ($this->props as $key => $value) {
+        foreach ($entity->props as $key => $value) {
                 if(!$value) continue;
-                $params += [$key => $this->$key];
+                $params += [$key => $entity->$key];
                 $columns[] .= "`{$key}` = :{$key}";
-                $this->props[$key] = false;
+                $entity->props[$key] = false;
         }
         $columns = implode(",", $columns);
-        $params['id'] = $this->id;
+        $params['id'] = $entity->id;
+        $tableName = $this->getTableName();
 
         $sql = "UPDATE {$tableName} SET {$columns} WHERE `id` = :id";
         Db::getInstance()->queryInsert($sql, $params);
         return $this;
     }
 
-    public function save() 
+    public function save(Entity $entity) 
     {
 
-        if (is_null($this->id)) {
-            return $this->insert();
+        if (is_null($entity->id)) {
+            return $this->insert($entity);
         } else {
-            return $this->update();
+            return $this->update($entity);
         }
     }
 
-    public static function getOneWhere($name, $value)
+    public function getOneWhere($name, $value)
     {
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE `{$name}` = :value";
-        return  Db::getInstance()->queryOneObject($sql, ['value' => $value], static::class);
+        return  Db::getInstance()->queryOneObject($sql, ['value' => $value], $this->getEntityClass());
     }
 
-    public static function getCountWhere($name, $value)
+    public function getCountWhere($name, $value)
     {
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
         $sql = "SELECT count(id) as count FROM {$tableName} WHERE `{$name}` = :value";
         return  Db::getInstance()->queryOne($sql, ['value' => $value])['count'];
     }
 
-    public static function getOne($id)
+    public function getOne($id)
     {
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return  Db::getInstance()->queryOneObject($sql, ['id' => $id], get_called_class());
+        return  Db::getInstance()->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
     }
 
-    public static function getAll()
+    public function getAll()
     {
-        $tableName = static::getTableName();
+        $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
         return  Db::getInstance()->queryAll($sql);
     }

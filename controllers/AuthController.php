@@ -1,17 +1,18 @@
 <?php
 
 namespace app\controllers;
-use app\models\Users;
+use app\models\repositories\UserRepository;
+use app\engine\Request;
 
 class AuthController extends MainController 
 {
     public function actionLogin() 
     {
-        $login = $_POST['login'];
-        $pass = $_POST['pass'];
+        $login = (new Request())->getParams()['login'];
+        $pass = (new Request())->getParams()['pass'];
 
 
-        if(Users::auth($login, $pass)) {
+        if((new UserRepository())->auth($login, $pass)) {
             header('Location:' . $_SERVER['HTTP_REFERER']);
             die();
         } else {

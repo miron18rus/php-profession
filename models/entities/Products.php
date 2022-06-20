@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
+use app\models\Entity;
 
-
-class Products extends DBModel
+class Products extends Entity
 {
 
     protected $id;
@@ -24,8 +24,5 @@ class Products extends DBModel
         $this->price = $price;
     }
 
-    public static function getTableName()
-    {
-        return 'products';
-    }
+
 }
