@@ -24,5 +24,5 @@ class Products extends Entity
         $this->price = $price;
     }
 
-
+    
 }

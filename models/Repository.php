@@ -18,7 +18,7 @@ abstract class Repository
         $tableName = $this->getTableName();
 
         foreach ($entity->props as $key => $value) {
-                $params += [$key => $this->$key];
+                $params += [$key => $entity->$key];
                 $columns[] = $key;
         }
 
