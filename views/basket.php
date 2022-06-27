@@ -24,7 +24,7 @@
                     const response = await fetch('/basket/delete/?id=' + id)
                     const answer = await response.json();
                     document.getElementById('count').innerText = answer.count;
-                    document.getElementById('id').remove();
+                    document.getElementById(id).remove();
                 }
             )()
         })
