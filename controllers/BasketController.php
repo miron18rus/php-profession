@@ -46,9 +46,11 @@ class BasketController extends MainController {
         $error = 'ok';
 
         $basket = (new BasketRepository())->getOne($id);
-        
+        if($session_id == $basket->session_id) {
             (new BasketRepository())->delete($basket);
-
+        } else {
+            $error = 'error';
+        }
 
         $response = [
             'success' => $error,
