@@ -35,7 +35,7 @@ abstract class Repository
     public function delete(Entity $entity)
     {
         $tableName = $this->getTableName();
-        $sql = "DELETE FROM {$tableName} WHERE id = :id";
+        $sql = "DELETE FROM {$tableName} WHERE `id` = :id";
         return Db::getInstance()->queryInsert($sql, ['id' => $entity->id]);
     }
 
@@ -86,7 +86,7 @@ abstract class Repository
     public function getOne($id)
     {
         $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+        $sql = "SELECT * FROM {$tableName} WHERE `id` = :id";
         return  Db::getInstance()->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
     }
 
