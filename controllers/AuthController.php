@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use app\engine\App;
 use app\models\repositories\UserRepository;
 use app\engine\Request;
 
@@ -8,11 +9,11 @@ class AuthController extends MainController
 {
     public function actionLogin() 
     {
-        $login = (new Request())->getParams()['login'];
-        $pass = (new Request())->getParams()['pass'];
+        $login = App::call()->request->getParams()['login'];
+        $pass = App::call()->request->getParams()['pass'];
 
 
-        if((new UserRepository())->auth($login, $pass)) {
+        if(App::call()->userRepository->auth($login, $pass)) {
             header('Location:' . $_SERVER['HTTP_REFERER']);
             die();
         } else {

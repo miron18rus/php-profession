@@ -6,19 +6,19 @@ use app\traits\TSingletone;
 
 class Db
 {
-
-    use TSingletone;
-
-    private $config = [
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'login' => 'root',
-        'password' => '',
-        'database' => 'php-prof',
-        'charset' => 'utf8'
-    ];
+    protected $config;
 
     private $connection = null;
+
+    public function __construct($driver = null, $host = null, $login = null, $password = null, $database = null, $charset = 'utf8')
+    {
+        $this->config['driver'] = $driver;
+        $this->config['host'] = $host;
+        $this->config['login'] = $login;
+        $this->config['password'] = $password;
+        $this->config['database'] = $database;
+        $this->config['charset'] = $charset;
+    }
 
     private function getConnection()
     {

@@ -1,8 +1,8 @@
 <?php
 
 namespace app\models\repositories;
+use app\engine\App;
 use app\models\Repository;
-use app\engine\Db;
 
 class BasketRepository extends Repository
 {
@@ -12,7 +12,7 @@ class BasketRepository extends Repository
         
         $sql = "SELECT basket.id basket_id, products.id prod_id, products.name, products.description, products.price FROM `basket`, `products` WHERE `session_id` = :session_id AND basket.product_id = products.id";
 
-        return  Db::getInstance()->queryAll($sql, ['session_id' => $session_id]);
+        return  App::call()->db->queryAll($sql, ['session_id' => $session_id]);
     }
 
     protected function getEntityClass() 

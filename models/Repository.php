@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-use app\engine\Db;
+use app\engine\App;
 
 abstract class Repository
 {
@@ -26,8 +26,8 @@ abstract class Repository
         $value = implode(',:', array_keys($params));
         $sql = "INSERT INTO {$tableName} ({$columns}) VALUES (:{$value})";
 
-        Db::getInstance()->queryInsert($sql, $params);
-        $this->id = Db::getInstance()->getlastInsertId();
+        App::call()->db->queryInsert($sql, $params);
+        $entity->id = App::call()->db->getlastInsertId();
 
         return $this;
     }
@@ -36,7 +36,7 @@ abstract class Repository
     {
         $tableName = $this->getTableName();
         $sql = "DELETE FROM {$tableName} WHERE `id` = :id";
-        return Db::getInstance()->queryInsert($sql, ['id' => $entity->id]);
+        return App::call()->db->queryInsert($sql, ['id' => $entity->id]);
     }
 
     public function update(Entity $entity) 
@@ -55,7 +55,7 @@ abstract class Repository
         $tableName = $this->getTableName();
 
         $sql = "UPDATE {$tableName} SET {$columns} WHERE `id` = :id";
-        Db::getInstance()->queryInsert($sql, $params);
+        App::call()->db->queryInsert($sql, $params);
         return $this;
     }
 
@@ -73,27 +73,27 @@ abstract class Repository
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE `{$name}` = :value";
-        return  Db::getInstance()->queryOneObject($sql, ['value' => $value], $this->getEntityClass());
+        return  App::call()->db->queryOneObject($sql, ['value' => $value], $this->getEntityClass());
     }
 
     public function getCountWhere($name, $value)
     {
         $tableName = $this->getTableName();
         $sql = "SELECT count(id) as count FROM {$tableName} WHERE `{$name}` = :value";
-        return  Db::getInstance()->queryOne($sql, ['value' => $value])['count'];
+        return  App::call()->db->queryOne($sql, ['value' => $value])['count'];
     }
 
     public function getOne($id)
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE `id` = :id";
-        return  Db::getInstance()->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
+        return  App::call()->db->queryOneObject($sql, ['id' => $id], $this->getEntityClass());
     }
 
     public function getAll()
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
-        return  Db::getInstance()->queryAll($sql);
+        return  App::call()->db->queryAll($sql);
     }
 }
