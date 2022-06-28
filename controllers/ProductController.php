@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 use app\models\repositories\ProductRepository;
+use app\engine\App;
 
 class ProductController extends MainController
 {
@@ -15,7 +16,7 @@ class ProductController extends MainController
 
     public function actionCatalog()
     {
-        $catalog = (new ProductRepository())->getAll();
+        $catalog = App::call()->productRepository()->getAll();
         echo $this->render('catalog', [
             'catalog' => $catalog
         ]);
@@ -24,7 +25,7 @@ class ProductController extends MainController
     public function actionCard() 
     {
         $id = $_GET['id'];
-        $product = (new ProductRepository())->getOne($id);
+        $product = App::call()->productRepository()->getOne($id);
         echo $this->render('card', [
             'product' => $product
         ]);
