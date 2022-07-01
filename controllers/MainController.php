@@ -4,8 +4,6 @@ namespace app\controllers;
 
 use app\engine\App;
 use app\interfaces\IRenderer;
-use app\models\repositories\UserRepository;
-use app\models\repositories\BasketRepository;
 
 abstract class MainController
 {

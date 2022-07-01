@@ -2,8 +2,6 @@
 
 namespace app\controllers;
 use app\engine\App;
-use app\models\repositories\UserRepository;
-use app\engine\Request;
 
 class AuthController extends MainController 
 {

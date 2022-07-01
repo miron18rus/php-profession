@@ -6,7 +6,7 @@ use app\models\Repository;
 class UserRepository extends Repository
 {
 
-    public function auth($login, $pass) 
+    public function auth($login, $pass): bool
     {
         $user = $this->getOneWhere('login', $login);
 

@@ -3,7 +3,6 @@
 
 namespace app\controllers;
 
-use app\models\repositories\ProductRepository;
 use app\engine\App;
 
 class ProductController extends MainController

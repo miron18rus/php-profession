@@ -15,12 +15,12 @@ class BasketRepository extends Repository
         return  App::call()->db->queryAll($sql, ['session_id' => $session_id]);
     }
 
-    protected function getEntityClass() 
+    protected function getEntityClass(): string
     {
         return Basket::class;
     }
 
-    public function getTableName()
+    public function getTableName(): string
     {
         return 'basket';
     }
