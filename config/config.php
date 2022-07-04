@@ -24,7 +24,7 @@ return [
             'host' => 'localhost',
             'login' => 'root',
             'password' => '',
-            'databse' => 'shop',
+            'database' => 'php-prof',
             'charset' => 'utf8'
         ],
         'request' => [
@@ -36,7 +36,7 @@ return [
         'productRepository' => [
             'class' => ProductRepository::class
         ],
-        'usersRepository' => [
+        'userRepository' => [
             'class' => UserRepository::class
         ],
         'session' => [

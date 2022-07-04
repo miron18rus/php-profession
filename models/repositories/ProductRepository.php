@@ -2,6 +2,7 @@
 
 
 namespace app\models\repositories;
+use app\models\entities\Products;
 use app\models\Repository;
 
 class ProductRepository extends Repository
@@ -9,7 +10,7 @@ class ProductRepository extends Repository
 
     protected function getEntityClass(): string
     {
-        return Product::class;
+        return Products::class;
     }
 
     public function getTableName(): string
