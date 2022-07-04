@@ -14,7 +14,7 @@ use app\models\repositories\UserRepository;
 
 return [
     'root' => dirname(__DIR__),
-    'controller_namespaces' => 'app\\controllers\\',
+    'controllers_namespaces' => 'app\\controllers\\',
     'product_per_page' => 2,
     'views_dir' => dirname(__DIR__) . "/views/",
     'components' => [
