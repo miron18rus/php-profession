@@ -25,6 +25,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpServers">
     <servers>
       <server host="Docker" id="b5f240af-cdc7-40f3-b881-56320c431fbc" name="docker" />
@@ -85,6 +86,10 @@
       <TestRunner directory="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner scope="XML" />
+      <method v="2" />
+    </configuration>
     <configuration name="XDebug" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" filter_connections="FILTER" server_name="docker" session_id="PHPSTORM">
       <method v="2" />
     </configuration>
@@ -110,7 +115,7 @@
       <workItem from="1656916150205" duration="427000" />
       <workItem from="1656916622057" duration="38000" />
       <workItem from="1656916710159" duration="344000" />
-      <workItem from="1656917168466" duration="273000" />
+      <workItem from="1656917168466" duration="501000" />
     </task>
     <task id="LOCAL-00001" summary="add class App">
       <created>1656431069169</created>
@@ -143,17 +148,6 @@
     <MESSAGE value="add class App" />
     <MESSAGE value="update engine" />
     <option name="LAST_COMMIT_MESSAGE" value="update engine" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/engine/App.php</url>
-          <line>19</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/php_profession@php_profession.xml" NAME="php-profession Coverage Results" MODIFIED="1656916487223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
